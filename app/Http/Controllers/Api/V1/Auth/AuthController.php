@@ -177,6 +177,66 @@ class AuthController extends Controller
         }
     }
 
+
+
+
+/**
+ * @OA\Post(
+ *     path="/auth/logout",
+ *     summary="Выход из системы",
+ *     description="Завершает сессию пользователя и инвалидирует токен доступа. Требуется авторизация.",
+ *     tags={"Авторизация"},
+ *     security={{"bearerAuth":{}}},
+ *     
+ *     @OA\Parameter(
+ *         name="Accept",
+ *         in="header",
+ *         required=true,
+ *         description="Тип принимаемого контента",
+ *         @OA\Schema(
+ *             type="string",
+ *             default="application/json"
+ *         )
+ *     ),
+ *     
+ *     @OA\Parameter(
+ *         name="Content-Type",
+ *         in="header",
+ *         required=true,
+ *         description="Тип отправляемого контента",
+ *         @OA\Schema(
+ *             type="string",
+ *             default="application/json"
+ *         )
+ *     ),
+ *     
+ *     @OA\Response(
+ *         response=200,
+ *         description="Успешный выход из системы",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=true, description="Флаг успешности операции")
+ *         )
+ *     ),
+ *     
+ *     @OA\Response(
+ *         response=401,
+ *         description="Неавторизован - отсутствует или недействителен токен доступа",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="Unauthenticated")
+ *         )
+ *     ),
+ *     
+ *     @OA\Response(
+ *         response=500,
+ *         description="Внутренняя ошибка сервера",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="Server error")
+ *         )
+ *     )
+ * )
+ */
     public function logout(Request $request) {
         try {
             $user = $request->user();
