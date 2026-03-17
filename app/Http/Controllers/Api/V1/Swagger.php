@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Api\V1;
  *         description="API документация для проекта RakursPRO"
  *     ),
  *     @OA\Server(
- *         url="http://89.169.1.198/api/v1",
+ *         url="https://api.pro-rakurs.ru/api/v1",
  *         description="Prodaction server"
  *     )
  * )

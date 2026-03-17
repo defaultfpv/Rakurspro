@@ -15,6 +15,8 @@ Homestead.yaml
 /storage/framework/views/
 /storage/logs/*.log
 /storage/debugbar/
+storage/api-docs/
+storage/api-docs/*.json
 
 # IDE
 /.idea/
