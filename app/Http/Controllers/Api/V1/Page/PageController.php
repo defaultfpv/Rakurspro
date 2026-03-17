@@ -36,7 +36,6 @@ class PageController extends Controller
      *     summary="Получить список всех страниц",
      *     description="Возвращает массив всех доступных страниц с их идентификаторами, названиями и слагами. Требуется авторизация.",
      *     tags={"Страницы"},
-     *     security={{"bearerAuth":{}}},
      *     
      *     @OA\Parameter(
      *         name="Accept",
@@ -123,7 +122,6 @@ class PageController extends Controller
  *     summary="Получить страницу по ID",
  *     description="Возвращает детальную информацию о странице с указанным идентификатором. Требуется авторизация.",
  *     tags={"Страницы"},
- *     security={{"bearerAuth":{}}},
  *     
  *     @OA\Parameter(
  *         name="Accept",
