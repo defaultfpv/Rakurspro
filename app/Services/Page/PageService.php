@@ -16,7 +16,8 @@ class PageService
             $cleanPages[] = [
                 'id' => $page->id,
                 'name' => $page->name,
-                'slug' => $page->slug
+                'slug' => $page->slug,
+                'type' =>$page->type
             ];
         }
         return $cleanPages;

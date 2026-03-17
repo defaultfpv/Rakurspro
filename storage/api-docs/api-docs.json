@@ -1,0 +1,1426 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "RakursPRO",
+        "description": "API документация для проекта RakursPRO",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/api/v1": {},
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Авторизация"
+                ],
+                "summary": "Авторизация пользователя",
+                "description": "Вход в систему по email и паролю. Возвращает токен доступа",
+                "operationId": "e5e32c5c121d50e864abf0f704b71593",
+                "parameters": [
+                    {
+                        "name": "CRM-API-Key",
+                        "in": "header",
+                        "description": "API ключ для доступа к сервису",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "j7hfu6pz8hr85lr9ejs4hfjg4ybap3909jvf8nee"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Email пользователя",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "babchenkod1999@gmail.com"
+                                    },
+                                    "password": {
+                                        "description": "Пароль пользователя",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "123123123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешная авторизация",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "description": "Токен доступа для авторизации в API",
+                                            "type": "string",
+                                            "example": "38|prYqATwTAR2aDoiMHiaViawYuKeamTI8OkVo2a2tb44db3db"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Некорректный запрос",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required"
+                                                    }
+                                                },
+                                                "password": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The password field is required"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неверные учетные данные",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Неверный API ключ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid API key"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email must be a valid email address."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Авторизация"
+                ],
+                "summary": "Выход из системы",
+                "description": "Завершает сессию пользователя и инвалидирует токен доступа. Требуется авторизация.",
+                "operationId": "1536ec034ecbb551483aeacfd4eea588",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Тип принимаемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    },
+                    {
+                        "name": "Content-Type",
+                        "in": "header",
+                        "description": "Тип отправляемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный выход из системы",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "description": "Флаг успешности операции",
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизован - отсутствует или недействителен токен доступа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/files": {
+            "post": {
+                "tags": [
+                    "Файлы"
+                ],
+                "summary": "Загрузить файл",
+                "description": "Загружает файл на сервер. Поддерживаются изображения. Требуется авторизация.",
+                "operationId": "04eb58d6432d8d423aedf6f037e4322b",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Тип принимаемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Файл для загрузки",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "Файл изображения (поддерживаются форматы: jpeg, png, jpg, gif, svg)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Файл успешно загружен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileUploadResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизован - отсутствует или недействителен токен доступа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "413": {
+                        "description": "Файл слишком большой",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The file is too large"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "Неподдерживаемый тип файла",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unsupported file type"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "file": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The file field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pages": {
+            "get": {
+                "tags": [
+                    "Страницы"
+                ],
+                "summary": "Получить список всех страниц",
+                "description": "Возвращает массив всех доступных страниц с их идентификаторами, названиями и слагами. Требуется авторизация.",
+                "operationId": "27d81f8e8c107b6dadce528d16473a15",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Тип принимаемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    },
+                    {
+                        "name": "Content-Type",
+                        "in": "header",
+                        "description": "Тип отправляемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ. Возвращает массив страниц.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Page"
+                                    }
+                                },
+                                "example": [
+                                    {
+                                        "id": 1,
+                                        "name": "Главная",
+                                        "slug": null
+                                    },
+                                    {
+                                        "id": 2,
+                                        "name": "Макияж",
+                                        "slug": "makeup"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизован - отсутствует или недействителен токен доступа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Доступ запрещен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Forbidden"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pages/{page_id}": {
+            "get": {
+                "tags": [
+                    "Страницы"
+                ],
+                "summary": "Получить страницу по ID",
+                "description": "Возвращает детальную информацию о странице с указанным идентификатором. Требуется авторизация.",
+                "operationId": "60ae1c384a14612c28febe4e7aece097",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Тип принимаемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    },
+                    {
+                        "name": "Content-Type",
+                        "in": "header",
+                        "description": "Тип отправляемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    },
+                    {
+                        "name": "page_id",
+                        "in": "path",
+                        "description": "ID страницы",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 11
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ. Возвращает детальную информацию о странице.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 11
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "style"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Street съёмка"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "street-shooting"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Стрит съемка в Москве"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Профессиональная стрит-фотография в городских условиях"
+                                        },
+                                        "h1": {
+                                            "type": "string",
+                                            "example": "Стрит съемка: запечатлей моменты города"
+                                        },
+                                        "banner_text": {
+                                            "type": "string",
+                                            "example": "Скидка 20% на первую съемку"
+                                        },
+                                        "html1": {
+                                            "type": "string",
+                                            "example": "<div class='content'><h3>Почему выбирают нас</h3><p>Мы работаем с 2010 года</p></div>"
+                                        },
+                                        "html2": {
+                                            "type": "string",
+                                            "example": "<div class='portfolio'><h3>Примеры работ</h3><p>Скоро будут добавлены</p></div>"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "enum": [
+                                                "active",
+                                                "arhived"
+                                            ],
+                                            "example": "active"
+                                        },
+                                        "tariffs": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Базовый"
+                                                    },
+                                                    "price": {
+                                                        "type": "string",
+                                                        "example": "30"
+                                                    },
+                                                    "tariff_list": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "title": {
+                                                                    "type": "string",
+                                                                    "example": "базовый минимум 1"
+                                                                },
+                                                                "description": {
+                                                                    "type": "string",
+                                                                    "example": "кольцо купи"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "advantages": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Опытные фотографы"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "10 лет опыта"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "faqs": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "question": {
+                                                        "type": "string",
+                                                        "example": "Как долго длится съемка?"
+                                                    },
+                                                    "answer": {
+                                                        "type": "string",
+                                                        "example": "От 1 до 3 часов"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "images": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "gallery",
+                                                            "banner"
+                                                        ],
+                                                        "example": "gallery"
+                                                    },
+                                                    "path": {
+                                                        "type": "string",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "alt": {
+                                                        "type": "string",
+                                                        "example": "Стрит съемка в центре"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизован - отсутствует или недействителен токен доступа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Страница не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Page not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Страницы"
+                ],
+                "summary": "Обновить страницу",
+                "description": "Обновляет существующую страницу по ID. Требуется авторизация.",
+                "operationId": "229fd87f7a55f739fca1069a8515d3db",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Тип принимаемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    },
+                    {
+                        "name": "Content-Type",
+                        "in": "header",
+                        "description": "Тип отправляемого контента",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "application/json"
+                        }
+                    },
+                    {
+                        "name": "page_id",
+                        "in": "path",
+                        "description": "ID страницы для обновления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 11
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления страницы",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "h1",
+                                    "banner_text",
+                                    "html1",
+                                    "html2",
+                                    "status",
+                                    "tariffs",
+                                    "advantages",
+                                    "faqs",
+                                    "images"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Стрит съемка в Москве"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Профессиональная стрит-фотография в городских условиях"
+                                    },
+                                    "h1": {
+                                        "type": "string",
+                                        "example": "Стрит съемка: запечатлей моменты города"
+                                    },
+                                    "banner_text": {
+                                        "type": "string",
+                                        "example": "Скидка 20% на первую съемку"
+                                    },
+                                    "html1": {
+                                        "type": "string",
+                                        "example": "<div class='content'><h3>Почему выбирают нас</h3><p>Мы работаем с 2010 года</p></div>"
+                                    },
+                                    "html2": {
+                                        "type": "string",
+                                        "example": "<div class='portfolio'><h3>Примеры работ</h3><p>Скоро будут добавлены</p></div>"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "arhived"
+                                        ],
+                                        "example": "active"
+                                    },
+                                    "tariffs": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "name",
+                                                "price",
+                                                "tariff_list"
+                                            ],
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Базовый"
+                                                },
+                                                "price": {
+                                                    "type": "string",
+                                                    "example": "30"
+                                                },
+                                                "tariff_list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "required": [
+                                                            "title",
+                                                            "description"
+                                                        ],
+                                                        "properties": {
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "базовый минимум 1"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "кольцо купи"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "minItems": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "minItems": 1
+                                    },
+                                    "advantages": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "title",
+                                                "description"
+                                            ],
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Опытные фотографы"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "10 лет опыта"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "minItems": 1
+                                    },
+                                    "faqs": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "question",
+                                                "answer"
+                                            ],
+                                            "properties": {
+                                                "question": {
+                                                    "type": "string",
+                                                    "example": "Как долго длится съемка?"
+                                                },
+                                                "answer": {
+                                                    "type": "string",
+                                                    "example": "От 1 до 3 часов"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "minItems": 1
+                                    },
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "type",
+                                                "url",
+                                                "alt"
+                                            ],
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "gallery",
+                                                        "banner"
+                                                    ],
+                                                    "example": "gallery"
+                                                },
+                                                "url": {
+                                                    "type": "string",
+                                                    "example": "/storage/images/street-1.jpg"
+                                                },
+                                                "alt": {
+                                                    "type": "string",
+                                                    "example": "Стрит съемка в центре"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "minItems": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Страница успешно обновлена. Возвращает обновленные данные страницы.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 11
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "style"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Street съёмка"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "street-shooting"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Стрит съемка в Москве"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Профессиональная стрит-фотография в городских условиях"
+                                        },
+                                        "h1": {
+                                            "type": "string",
+                                            "example": "Стрит съемка: запечатлей моменты города"
+                                        },
+                                        "banner_text": {
+                                            "type": "string",
+                                            "example": "Скидка 20% на первую съемку"
+                                        },
+                                        "html1": {
+                                            "type": "string",
+                                            "example": "<div class='content'><h3>Почему выбирают нас</h3><p>Мы работаем с 2010 года</p></div>"
+                                        },
+                                        "html2": {
+                                            "type": "string",
+                                            "example": "<div class='portfolio'><h3>Примеры работ</h3><p>Скоро будут добавлены</p></div>"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "enum": [
+                                                "active",
+                                                "arhived"
+                                            ],
+                                            "example": "active"
+                                        },
+                                        "tariffs": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Базовый"
+                                                    },
+                                                    "price": {
+                                                        "type": "string",
+                                                        "example": "30"
+                                                    },
+                                                    "tariff_list": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 7
+                                                                },
+                                                                "title": {
+                                                                    "type": "string",
+                                                                    "example": "базовый минимум 1"
+                                                                },
+                                                                "description": {
+                                                                    "type": "string",
+                                                                    "example": "кольцо купи"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "advantages": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Опытные фотографы"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "10 лет опыта"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "faqs": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "question": {
+                                                        "type": "string",
+                                                        "example": "Как долго длится съемка?"
+                                                    },
+                                                    "answer": {
+                                                        "type": "string",
+                                                        "example": "От 1 до 3 часов"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "images": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "gallery",
+                                                            "banner"
+                                                        ],
+                                                        "example": "gallery"
+                                                    },
+                                                    "path": {
+                                                        "type": "string",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "alt": {
+                                                        "type": "string",
+                                                        "example": "Стрит съемка в центре"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неавторизован - отсутствует или недействителен токен доступа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Страница не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Page not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                },
+                                                "tariffs": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The tariffs field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Внутренняя ошибка сервера",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "FileUploadResponse": {
+                "properties": {
+                    "success": {
+                        "description": "Флаг успешности операции",
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "path": {
+                        "description": "Путь к загруженному файлу",
+                        "type": "string",
+                        "example": "/storage/images/1773644834.png"
+                    }
+                },
+                "type": "object"
+            },
+            "Page": {
+                "properties": {
+                    "id": {
+                        "description": "Уникальный идентификатор страницы",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Название страницы",
+                        "type": "string",
+                        "example": "Главная"
+                    },
+                    "slug": {
+                        "description": "URL-слаг страницы (может быть null)",
+                        "type": "string",
+                        "example": "makeup",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Введите токен в формате: Bearer {token}",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Авторизация",
+            "description": "Методы для авторизации и аутентификации пользователей"
+        },
+        {
+            "name": "Страницы",
+            "description": "Управление страницами"
+        },
+        {
+            "name": "Файлы",
+            "description": "Работа с файлами"
+        }
+    ]
+}
