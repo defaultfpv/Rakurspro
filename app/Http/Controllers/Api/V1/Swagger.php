@@ -11,8 +11,8 @@ namespace App\Http\Controllers\Api\V1;
  *         description="API документация для проекта RakursPRO"
  *     ),
  *     @OA\Server(
- *         url="http://localhost:8000/api/v1",
- *         description="Local server"
+ *         url="http://89.169.1.198/api/v1",
+ *         description="Prodaction server"
  *     )
  * )
  * 
