@@ -22,17 +22,6 @@ class AuthController extends Controller
  *     tags={"Авторизация"},
  *     security={},
  *     
- *     @OA\Parameter(
- *         name="CRM-API-Key",
- *         in="header",
- *         required=true,
- *         description="API ключ для доступа к сервису",
- *         @OA\Schema(
- *             type="string",
- *             example="j7hfu6pz8hr85lr9ejs4hfjg4ybap3909jvf8nee"
- *         )
- *     ),
- *     
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
