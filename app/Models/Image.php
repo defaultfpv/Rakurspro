@@ -12,7 +12,7 @@ class Image extends Model
     protected $fillable = [
         'page_id',
         'type',
-        'path',
+        'url',
         'alt'
     ];
 

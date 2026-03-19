@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('page_id')->nullable()->constrained('pages')->onDelete('cascade');
             $table->text('type')->nullable();
-            $table->text('path')->nullable();
+            $table->text('url')->nullable();
             $table->text('alt')->nullable();
             $table->timestamps();
         });
