@@ -17,7 +17,7 @@ class PagesTableSeeder extends Seeder
 
         Page::create([
             'name' => 'Главная',
-            'slug' => '/',
+            'slug' => 'general',
             'type' => 'index',
         ]);
 
