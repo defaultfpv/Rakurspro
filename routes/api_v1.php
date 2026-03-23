@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\File\FileController;
+use App\Http\Controllers\Api\V1\User\UserController;
 use App\Http\Controllers\Api\V1\Page\PageController;
+use App\Http\Controllers\Api\V1\Email\EmailController;
 use App\Http\Controllers\TestController;
 
 
@@ -45,6 +47,18 @@ Route::prefix('pages')->group(function () {
 // Файлы
 Route::prefix('files')->group(function () {
     Route::middleware('auth_token')->post('', [FileController::class, 'add']);
+});
+
+
+// Пользователи
+Route::prefix('users')->group(function () {
+    Route::middleware('auth_token')->get('me', [UserController::class, 'me']);
+});
+
+
+// Почта
+Route::prefix('email')->group(function () {
+    Route::post('send', [EmailController::class, 'send']);
 });
 
 // Тест

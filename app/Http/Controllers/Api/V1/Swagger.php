@@ -22,6 +22,11 @@ namespace App\Http\Controllers\Api\V1;
  * )
  * 
  * @OA\Tag(
+ *     name="Пользователи",
+ *     description="Методы для работы с пользователями"
+ * )
+ * 
+ * @OA\Tag(
  *     name="Страницы",
  *     description="Управление страницами"
  * )
@@ -29,6 +34,11 @@ namespace App\Http\Controllers\Api\V1;
  * @OA\Tag(
  *     name="Файлы",
  *     description="Работа с файлами"
+ * )
+ *
+ * @OA\Tag(
+ *     name="Email",
+ *     description="Работа с письмами"
  * )
  * 
  * @OA\Components(
