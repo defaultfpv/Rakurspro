@@ -31,6 +31,12 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
+
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
+            'sanctum/*',
+        ]);
+
         // Регистрация алиасов для middleware
         $middleware->alias([
             'api_token' => \App\Http\Middleware\AppStaticToken::class,
@@ -75,6 +81,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Auth\Middleware\Authorize::class,
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
